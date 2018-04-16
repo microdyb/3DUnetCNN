@@ -49,12 +49,16 @@ config["overwrite"] = False  # If True, will previous files. If False, will use 
 def fetch_training_data_files(return_subject_ids=False):
     training_data_files = list()
     subject_ids = list()
+    # cardiac: specify the root directory of train data
     for subject_dir in glob.glob(os.path.join(os.path.dirname(__file__), "data", "preprocessed", "*", "*")):
         subject_ids.append(os.path.basename(subject_dir))
         subject_files = list()
+        # cardiac: suject_files contain images of several modalities and one truth data
         for modality in config["training_modalities"] + ["truth"]:
             subject_files.append(os.path.join(subject_dir, modality + ".nii.gz"))
         training_data_files.append(tuple(subject_files))
+        # cardiac: the structure of training_data_files: ( (modality1, modality2, ... ,truth), (modality1, modality2, .. ,truth), ... )
+        # cardiac: subject_ids is a name list of all the images, each of which could contain several modalities and truth. (name1, name2, ...)
     if return_subject_ids:
         return training_data_files, subject_ids
     else:
