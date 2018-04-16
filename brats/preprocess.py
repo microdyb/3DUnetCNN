@@ -122,6 +122,7 @@ def convert_brats_folder(in_folder, out_folder, truth_name="GlistrBoost_Manually
         out_file = os.path.abspath(os.path.join(out_folder, name + ".nii.gz"))
         perform_bias_correction = no_bias_correction_modalities and name not in no_bias_correction_modalities
         normalize_image(image_file, out_file, bias_correction=perform_bias_correction)
+        # cardiac: CT data doesn't need it
     # copy the truth file
     try:
         truth_file = get_image(in_folder, truth_name)
@@ -130,6 +131,7 @@ def convert_brats_folder(in_folder, out_folder, truth_name="GlistrBoost_Manually
     out_file = os.path.abspath(os.path.join(out_folder, "truth.nii.gz"))
     shutil.copy(truth_file, out_file)
     check_origin(out_file, get_image(in_folder, config["all_modalities"][0]))
+    # cardiac: if there are more than one modality, data of different modalities should have the same origin
 
 
 def convert_brats_data(brats_folder, out_folder, overwrite=False, no_bias_correction_modalities=("flair",)):
