@@ -24,6 +24,8 @@ def get_affine(in_file):
     return read_image(in_file).affine
 
 
+# cardiac: read_image_files is used to resize images to the size of image_shape
+# cardiac: labels file will use nearest neighbor interpolation so as not to mess up the labels
 def read_image_files(image_files, image_shape=None, crop=None, label_indices=None):
     """
     
