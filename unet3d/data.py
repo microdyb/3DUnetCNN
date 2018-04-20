@@ -5,7 +5,9 @@ import tables
 
 from .normalize import normalize_data_storage, reslice_image_set
 
-
+# cardiac: filters are used for data compression
+# cardiac: earray is a kind of enlargeable array defined by tables
+# cardiac: affine_storage
 def create_data_file(out_file, n_channels, n_samples, image_shape):
     hdf5_file = tables.open_file(out_file, mode='w')
     filters = tables.Filters(complevel=5, complib='blosc')
@@ -18,7 +20,7 @@ def create_data_file(out_file, n_channels, n_samples, image_shape):
     affine_storage = hdf5_file.create_earray(hdf5_file.root, 'affine', tables.Float32Atom(), shape=(0, 4, 4),
                                              filters=filters, expectedrows=n_samples)
     return hdf5_file, data_storage, truth_storage, affine_storage
-
+    
 
 def write_image_data_to_file(image_files, data_storage, truth_storage, image_shape, n_channels, affine_storage,
                              truth_dtype=np.uint8, crop=True):
