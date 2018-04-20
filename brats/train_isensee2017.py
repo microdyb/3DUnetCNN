@@ -67,6 +67,7 @@ def fetch_training_data_files(return_subject_ids=False):
 
 def main(overwrite=False):
     # convert input images into an hdf5 file
+    # cardiac: the key "overwrite" will be replaced by "model_overwrite" and "data_overwrite"
     if overwrite or not os.path.exists(config["data_file"]):
         training_files, subject_ids = fetch_training_data_files(return_subject_ids=True)
 
